@@ -2,8 +2,126 @@
 <html>
 <head>
     <title>Patatap Clone</title>
+    
+    <!-- Including paper.js library for animations-->
+    <script type="text/javascript" src="assets/lib/paper-full.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/patatap.css">
+
+    <!-- paper.js code -->
+    <script type="text/paperscript" canvas="myCanvas">
+        // nested objects to keep track of color/sound data
+        //Howler.js not compatible in Chrome, so no sound data (yet!)
+		var keyData = {
+			q: {
+				color: '#1abc9c'
+			},
+			w: {
+				color: '#2ecc71'
+			},
+			e: {
+				color: '#3498db'
+			},
+			r: {
+				color: '#9b59b6'
+			},
+			t: {
+				color: '#34495e'
+			},
+			y: {
+				color: '#16a085'
+			},
+			u: {
+				color: '#27ae60'
+			},
+			i: {
+				color: '#2980b9'
+			},
+			o: {
+				color: '#8e44ad'
+			},
+			p: {
+				color: '#2c3e50'
+			},
+			a: {
+				color: '#f1c40f'
+			},
+			s: {
+				color: '#e67e22'
+			},
+			d: {
+				color: '#e74c3c'
+			},
+			f: {
+				color: '#95a5a6'
+			},
+			g: {
+				color: '#f39c12'
+			},
+			h: {
+				color: '#d35400'
+			},
+			j: {
+				color: '#1abc9c'
+			},
+			k: {
+				color: '#2ecc71'
+			},
+			l: {
+				color: '#3498db'
+			},
+			z: {
+				color: '#9b59b6'
+			},
+			x: {
+				color: '#34495e'
+			},
+			c: {
+				color: '#16a085'
+			},
+			v: {
+				color: '#27ae60'
+			},
+			b: {
+				color: '#2980b9'
+			},
+			n: {
+				color: '#8e44ad'
+			},
+			m: {
+				color: '#2c3e50'
+			}
+		};
+    
+        //circle array that keeps track of circles on the screen
+        var circles = [];
+        
+        // keydown event
+        function onKeyDown(event) {
+            if(keyData[event.key]) {
+                // generating random x and y based on size of visible canvas
+                var x = Math.floor(Math.random() * view.size.width + 1);
+                var y = Math.floor(Math.random() * view.size.height + 1);
+
+                var newCircle = new Path.Circle(new Point(x, y), 100);
+                newCircle.fillColor = keyData[event.key].color;
+
+                //creates new circle with random coordinates every key down
+                circles.push(newCircle);
+            }
+        }
+
+        //every frame -- for each existing circle
+        function onFrame(event) {
+            //change the fill color and shrink
+            for(var i = 0; i < circles.length; i++) {
+                circles[i].fillColor.hue += 1;
+                circles[i].scale(0.95);
+            }
+        }
+    </script>
 </head>
 <body>
-    
+    <!-- Creating canvas on html page -->
+    <canvas id="myCanvas" resize></canvas>
 </body>
 </html>
